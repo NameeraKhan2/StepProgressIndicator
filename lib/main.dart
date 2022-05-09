@@ -29,23 +29,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _stepsText = ["About you", "Some more..", "Your credit card details"];
-
-  final _stepCircleRadius = 10.0;
-
-  final _stepProgressViewHeight = 150.0;
-
+  final _stepsText = ["1", "2", "3"];
+  final _stepCircleRadius = 15.0;
+  final _stepProgressViewHeight = 100.0;
   Color _activeColor = Colors.lightBlue;
-
   Color _inactiveColor = Colors.grey;
 
-  TextStyle _headerStyle =
-      TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold);
+  TextStyle _headerStyle = TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold);
 
-  TextStyle _stepStyle = TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold);
-
+  //TextStyle _stepStyle = TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold);
   Size _safeAreaSize;
-
   int _curPage = 1;
 
   StepProgressView _getStepProgress() {
@@ -58,12 +51,12 @@ class _MyHomePageState extends State<MyHomePage> {
       _activeColor,
       _inactiveColor,
       _headerStyle,
-      _stepStyle,
-      decoration: BoxDecoration(color: Colors.white),
+      //_stepStyle,
+      //decoration: BoxDecoration(color: Colors.red),
       padding: EdgeInsets.only(
         top: 48.0,
-        left: 24.0,
-        right: 24.0,
+        left: 105.0,
+        right: 105.0,
       ),
     );
   }
@@ -74,10 +67,13 @@ class _MyHomePageState extends State<MyHomePage> {
     _safeAreaSize = mediaQD.size;
     return Scaffold(
         body: Column(
-      children: <Widget>[
-        Container(height: 150.0, child: _getStepProgress()),
-        Expanded(
-          child: PageView(
+          children: <Widget>[
+          Container(height: 130.0, child: _getStepProgress()),
+          Expanded(
+
+          //button ke click pe ye kaam kr skte hai. mtlb next
+          // page aate hi dot radius changes color
+           child: PageView(
             onPageChanged: (i) {
               setState(() {
                 _curPage = i + 1;
@@ -111,7 +107,8 @@ class StepProgressView extends StatelessWidget {
     Color activeColor,
     Color inactiveColor,
     TextStyle headerStyle,
-    TextStyle stepsStyle, {
+    //TextStyle stepsStyle,
+      {
     Key key,
     this.decoration,
     this.padding,
@@ -124,7 +121,7 @@ class StepProgressView extends StatelessWidget {
         _activeColor = activeColor,
         _inactiveColor = inactiveColor,
         _headerStyle = headerStyle,
-        _stepStyle = stepsStyle,
+       // _stepStyle = stepsStyle,
         assert(curStep > 0 == true && curStep <= stepsText.length),
         assert(width > 0),
         assert(height >= 2 * dotRadius),
@@ -154,7 +151,7 @@ class StepProgressView extends StatelessWidget {
   //header textstyle
   final TextStyle _headerStyle;
   //steps text
-  final TextStyle _stepStyle;
+ // final TextStyle _stepStyle;
 
   List<Widget> _buildDots() {
     var wids = <Widget>[];
@@ -167,6 +164,7 @@ class StepProgressView extends StatelessWidget {
       wids.add(CircleAvatar(
         radius: _dotRadius,
         backgroundColor: circleColor,
+        child: Text("1"),       //ye text vary krna chaiye har button mai
       ));
 
       //add a line separator
@@ -186,14 +184,14 @@ class StepProgressView extends StatelessWidget {
     return wids;
   }
 
-  List<Widget> _buildText() {
-    var wids = <Widget>[];
-    _stepsText.asMap().forEach((i, text) {
-      wids.add(Text(text, style: _stepStyle));
-    });
-
-    return wids;
-  }
+  // List<Widget> _buildText() {
+  //   var wids = <Widget>[];
+  //   _stepsText.asMap().forEach((i, text) {
+  //     wids.add(Text(text, style: _stepStyle));
+  //   });
+  //
+  //   return wids;
+  // }
 
   Widget build(BuildContext context) {
     return Container(
@@ -208,20 +206,20 @@ class StepProgressView extends StatelessWidget {
               child: RichText(
                 text: TextSpan(
                   children: [
-                    TextSpan(
-                      text: (_curStep).toString(),
-                      style: _headerStyle.copyWith(
-                        color: _activeColor, //this is always going to be active
-                      ),
-                    ),
-                    TextSpan(
-                      text: " / " + _stepsText.length.toString(),
-                      style: _headerStyle.copyWith(
-                        color: _curStep == _stepsText.length
-                            ? _activeColor
-                            : _inactiveColor,
-                      ),
-                    ),
+                    // TextSpan(
+                    //   text: (_curStep).toString(),
+                    //   style: _headerStyle.copyWith(
+                    //     color: _activeColor, //this is always going to be active
+                    //   ),
+                    // ),
+                    // TextSpan(
+                    //   text: " / " + _stepsText.length.toString(),
+                    //   style: _headerStyle.copyWith(
+                    //     color: _curStep == _stepsText.length
+                    //         ? _activeColor
+                    //         : _inactiveColor,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -233,10 +231,10 @@ class StepProgressView extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: _buildText(),
-          )
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: _buildText(),
+          // )
         ],
       ),
     );
